@@ -1,11 +1,9 @@
-from collections.abc import Sequence
-
 class WinConditions:
-    def is_game_done(self, grid: Sequence[list[str]], token: str) -> bool:
+    def is_game_done(self, grid: list[str], token: str) -> bool:
         ...
 
 class BasicTicTacToe(WinConditions):
-    def is_game_done(self, grid: Sequence[list[str]], token: str) -> bool:
+    def is_game_done(self, grid: list[str], token: str) -> bool:
         for row in grid:
             counter = 0
             for col in row:

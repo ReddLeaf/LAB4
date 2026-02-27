@@ -4,36 +4,7 @@ from collections.abc import Sequence
 # pyright: strict
 from typing import Sequence
 from common_types import Player, TokenPhysicsType
-
-class WinConditions:
-    def is_game_done(self, grid: Sequence[list[str]], token: str) -> bool:
-        ...
-
-class BasicTicTacToe(WinConditions):
-    def is_game_done(self, grid: Sequence[list[str]], token: str) -> bool:
-        for row in grid:
-            counter = 0
-            for col in row:
-                if col == token:
-                    counter += 1
-                    if counter == 3:
-                        return True
-
-        for col in range(len(grid[0])):
-            counter = 0 
-            for row in grid:
-                if row[col] == token:
-                    counter += 1
-                    if counter == 3:
-                        return True
-        
-        return False
-
-class NotConnectFour(WinConditions):
-    ...
-
-class TicTacTOe(WinConditions):
-    ...
+from classes import WinConditions
 
 class ConnectTacToeModel:
     ROW_SIZE: int = 6
@@ -64,7 +35,7 @@ class ConnectTacToeModel:
 
     @property
     def is_game_done(self) -> bool:
-        if self.condition.is_game_done(self.grid):
+        if self.condition.is_game_done(self.grid, self._display_token[self._turn]):
             self._winner = self._players[self._turn - 1]
             return True
         return False

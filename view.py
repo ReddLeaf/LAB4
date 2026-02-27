@@ -32,5 +32,18 @@ class ConnectTacToeView:
     def show_current_player(self, player: Player):
         print(f"Player {player}'s turn")
 
-    def show_winner(self, winner: Player):
+    def show_winner(self, winner: Player | None, grid: list[str]):
+        def check_for_unoccupied():
+            for i in grid:
+                for j in i:
+                    if j == ".":
+                        return False
+            return True
+
+        if winner is None and check_for_unoccupied():
+            print("Stalemate! There is no winner!")
+        elif winner is None:
+            print("It's a tie! Both players have won!")
+        else:
+            print("Player {winner} has won!")
         print()

@@ -53,10 +53,10 @@ class ConnectTacToeModel:
         return self.COL_SIZE
 
     def choose_cell(self, row: int, col: int) -> bool:        
-        if 0 >= row or  row > self.ROW_SIZE+1:
+        if 0 > row or  row > self.ROW_SIZE:
             return False
 
-        if 0 >= col or  col > self.COL_SIZE+1:
+        if 0 > col or  col > self.COL_SIZE:
             return False
 
         if self.is_game_done:

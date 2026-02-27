@@ -19,6 +19,7 @@ class ConnectTacToeModel:
         self._grid = self._gen_map(self.ROW_SIZE, self.COL_SIZE)
         self._player_tokens: dict[Player, set[tuple[int, int]]] = {p : set() for p in players}
         self._winner = None
+        self._is_game_done = False
 
     def _gen_map(self, row: int, col: int) -> Sequence[list[str]]:
         grid: list[list[str]] = [["." for _ in range(col)] for _ in range(row)]
@@ -35,10 +36,7 @@ class ConnectTacToeModel:
 
     @property
     def is_game_done(self) -> bool:
-        if self.condition.is_game_done(self.grid, self._display_token[self._turn]):
-            self._winner = self._players[self._turn - 1]
-            return True
-        return False
+        return self._is_game_done
 
     @property
     def grid(self) -> list[str]:
@@ -73,6 +71,9 @@ class ConnectTacToeModel:
         return False
 
     def advance_turn(self) -> None:
+        self._is_game_done = self.condition.is_game_done(self.grid, self._display_token[self._turn])
+        if self._is_game_done:
+            self._winner = self._players[self._turn]
         self._turn = (self._turn + 1) % len(self._players)
 
     def get_owner(self, row: int, col: int) -> Player | None:

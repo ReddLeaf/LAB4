@@ -11,7 +11,7 @@ class ConnectTacToeModel:
     COL_SIZE: int = 7
 
     def __init__(self, players: list[Player], condition: WinConditions, token_type: TokenPhysicsType) -> None:
-        self._turn = 0
+        self._turn: int = 0
         self._players = players
         self.condition = condition
         self.token_type = token_type
@@ -73,7 +73,7 @@ class ConnectTacToeModel:
         return False
 
     def advance_turn(self) -> None:
-        self._turn += 1
+        self._turn = self._turn + 1 % len(self._players)
 
     def get_owner(self, row: int, col: int) -> Player | None:
         for p in self._players:

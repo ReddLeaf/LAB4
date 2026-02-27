@@ -1,4 +1,4 @@
-# pyright: strict
+# pyright : strict
 
 from common_types import WinConditionType, TokenPhysicsType, Player
 from model import ConnectTacToeModel, NotConnectFour, WinConditions, BasicTicTacToe

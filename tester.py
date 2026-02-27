@@ -1,8 +1,8 @@
 # pyright : strict
 
 from common_types import WinConditionType, TokenPhysicsType, Player
-from model import ConnectTacToeModel, NotConnectFour, WinConditions, BasicTicTacToe
-
+from model import ConnectTacToeModel, WinConditions
+from classes import NotConnectFour, BasicTicTacToe
 
 def make(win_condition_type: WinConditionType, token_physics_type: TokenPhysicsType) -> ConnectTacToeModel:
     condition: WinConditions

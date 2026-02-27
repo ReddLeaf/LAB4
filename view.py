@@ -3,8 +3,9 @@
 from common_types import Player
 
 class ConnectTacToeView:
-    def display_grid(self, grid:  list[str]):
-        print("  ".join(row) for row in grid)
+    def display_grid(self, grid: list[str]):
+        for row in grid:
+            print(row)
         print()
 
     def ask_for_ij(self, rows: int, cols: int) -> tuple[int, int]:

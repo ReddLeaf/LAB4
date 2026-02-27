@@ -23,4 +23,4 @@ class ConnectTacToeController:
                     break
             model.advance_turn()
         view.show_winner(model.winner,model.grid)
-        
+        view.display_grid(model.grid)     

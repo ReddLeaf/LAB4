@@ -45,6 +45,8 @@ class BasicTicTacToe(WinConditions):
                     counter += 1
                     if counter == 3:
                         return True
+                else:
+                    counter = 0
 
         for col in range(len(grid[0])):
             counter = 0 
@@ -53,6 +55,8 @@ class BasicTicTacToe(WinConditions):
                     counter += 1
                     if counter == 3:
                         return True
+                else:
+                    counter = 0
         
         return False
 

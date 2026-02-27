@@ -73,7 +73,7 @@ class ConnectTacToeModel:
         return False
 
     def advance_turn(self) -> None:
-        self._turn = self._turn + 1 % len(self._players)
+        self._turn = (self._turn + 1) % len(self._players)
 
     def get_owner(self, row: int, col: int) -> Player | None:
         for p in self._players:

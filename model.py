@@ -1,16 +1,15 @@
 # pyright: strict
 
 from collections.abc import Sequence
-# pyright: strict
 from typing import Sequence
-from common_types import Player, TokenPhysicsType
-from classes import WinConditions
+from common_types import Player
+from classes import WinConditions, TokenPhysics
 
 class ConnectTacToeModel:
     ROW_SIZE: int = 6
     COL_SIZE: int = 7
 
-    def __init__(self, players: list[Player], condition: WinConditions, token_type: TokenPhysicsType) -> None:
+    def __init__(self, players: list[Player], condition: WinConditions, token_type: TokenPhysics) -> None:
         self._turn: int = 0
         self._players = players
         self.condition = condition
@@ -75,6 +74,7 @@ class ConnectTacToeModel:
         if self._is_game_done:
             self._winner = self._players[self._turn]
         self._turn = (self._turn + 1) % len(self._players)
+        self._grid = self.token_type.apply_physics(self._grid,self.ROW_SIZE,self.COL_SIZE)
 
     def get_owner(self, row: int, col: int) -> Player | None:
         for p in self._players:

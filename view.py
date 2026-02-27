@@ -44,4 +44,6 @@ class ConnectTacToeView:
             print("Stalemate! There is no winner!")
         elif winner is None:
             print("It's a tie! Both players have won!")
+        else:
+            print("Player {winner} has won!")
         print()

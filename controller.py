@@ -1,6 +1,7 @@
 # pyright : strict
 
-from model  import ConnectTacToeView,ConnectTacToeModel
+from model  import ConnectTacToeModel
+from view import ConnectTacToeViev
 
 
 class ConnectTacToeController:
@@ -12,11 +13,9 @@ class ConnectTacToeController:
     def run(self):
         model = self._model
         view = self._view
-
         while not model.is_game_done:
             view.display_grid()
             view.show_current_player(model.current_player)
-        # ask for input
             i,j = float('inf'), float('inf')
             while not choose_cell(i,j):
                 i,j = view.ask_for_ij(model.row_count,model.col_count)

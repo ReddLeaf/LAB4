@@ -5,8 +5,7 @@ from view import ConnectTacToeView
 
 
 class ConnectTacToeController:
-
-    def __init__(self,view:ConnectTacToeView,model:ConnectTacToeModel):
+    def __init__(self,view: ConnectTacToeView,model: ConnectTacToeModel):
         self._view = view
         self._model = model
 

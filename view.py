@@ -1,6 +1,5 @@
 # pyright: strict
-
-from common_types import Player
+from player import PlayerData
 
 class ConnectTacToeView:
     def display_grid(self, grid: list[str]):
@@ -30,10 +29,10 @@ class ConnectTacToeView:
         print()
         return (i, j)
     
-    def show_current_player(self, player: Player):
-        print(f"Player {player.value}'s turn")
+    def show_current_player(self, player: PlayerData):
+        print(f"{player.display_name}'s turn")
 
-    def show_winner(self, winner: Player | None, grid: list[str]):
+    def show_winner(self, winner: PlayerData | None, grid: list[str]):
         def check_for_unoccupied():
             for i in grid:
                 for j in i:
@@ -46,5 +45,5 @@ class ConnectTacToeView:
         elif winner is None:
             print("It's a tie! Both players have won!")
         else:
-            print(f"Player {winner.value} has won!")
+            print(f"{winner.display_name} has won!")
         print()

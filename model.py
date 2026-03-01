@@ -1,36 +1,35 @@
 # pyright: strict
 
 from collections.abc import Sequence
-from typing import Sequence
 from common_types import Player
 from classes import WinConditions, TokenPhysics
+from player import PlayerData
 
 class ConnectTacToeModel:
     ROW_SIZE: int = 6
     COL_SIZE: int = 7
 
-    def __init__(self, players: list[Player], condition: WinConditions, token_type: TokenPhysics) -> None:
-        self._turn: int = 0
+    def __init__(self, players: list[PlayerData], condition: WinConditions, token_type: TokenPhysics) -> None:
         self._players = players
         self.condition = condition
         self.token_type = token_type
-        self._display_token = ["O", "X"]
-        self._grid = self._gen_map(self.ROW_SIZE, self.COL_SIZE)
-        self._player_tokens: dict[Player, set[tuple[int, int]]] = {p : set() for p in players}
+
+        self._grid: list[list[str]] = self._gen_map(self.ROW_SIZE, self.COL_SIZE)
+        self._turn: int = 0
         self._winner = None
         self._is_game_done = False
 
-    def _gen_map(self, row: int, col: int) -> Sequence[list[str]]:
+    def _gen_map(self, row: int, col: int) -> list[list[str]]:
         grid: list[list[str]] = [["." for _ in range(col)] for _ in range(row)]
         return grid
 
     @property
-    def current_player(self) -> Player:
+    def current_player(self) -> PlayerData:
         num_players: int = len(self._players)
         return self._players[self._turn % num_players]
 
     @property
-    def winner(self) -> Player | None:
+    def winner(self) -> PlayerData | None:
         return self._winner
 
     @property
@@ -39,9 +38,7 @@ class ConnectTacToeModel:
 
     @property
     def grid(self) -> list[str]:
-        grid: list[str] = ["".join(row) for row in self._grid]
-        return grid
-
+        return ["".join(row) for row in self._grid]
 
     @property
     def row_count(self) -> int:
@@ -52,32 +49,32 @@ class ConnectTacToeModel:
         return self.COL_SIZE
 
     def choose_cell(self, row: int, col: int) -> bool:        
-        if 0 > row or  row > self.ROW_SIZE:
+        if not (0 <= row < self.row_count):
             return False
 
-        if 0 > col or  col > self.COL_SIZE:
+        if not (0 <= col < self.col_count):
             return False
 
         if self.is_game_done:
             return False
         
         if self._grid[row][col] in {"."}:
-            curr_player = self._players[self._turn]
-            self._grid[row][col] = self._display_token[self._turn]
-            self._player_tokens[curr_player].add((row, col))
+            curr_player = self.current_player
+            self._grid[row][col] = curr_player.symbol
+            curr_player.owned_tokens.add((row, col))
             return True
         
         return False
 
     def advance_turn(self) -> None:
-        self._is_game_done = self.condition.is_game_done(self.grid, self._display_token[self._turn])
+        self._is_game_done = self.condition.is_game_done(self.grid, self._players[self._turn].symbol)
         if self._is_game_done:
-            self._winner = self._players[self._turn]
+            self._winner = self.current_player
         self._turn = (self._turn + 1) % len(self._players)
-        self._grid = self.token_type.apply_physics(self._grid,self.ROW_SIZE,self.COL_SIZE)
+        self._grid = self.token_type.apply_physics(self._grid, self.row_count, self.col_count)
 
     def get_owner(self, row: int, col: int) -> Player | None:
         for p in self._players:
-            if (row, col) in self._player_tokens[p]:
-                return p
+            if (row, col) in p.owned_tokens:
+                return p.player
         return None

@@ -1,5 +1,5 @@
 from string import ascii_uppercase
-from common_types import Player
+from core.common_types import Player
 
 def make_players(players: type[Player]) -> list[PlayerData]:
     col = [PlayerData(player) for player in players]

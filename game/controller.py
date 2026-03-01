@@ -1,7 +1,7 @@
 # pyright : strict
 
-from model  import ConnectTacToeModel
-from view import ConnectTacToeView
+from game.model import ConnectTacToeModel
+from game.view import ConnectTacToeView
 
 
 class ConnectTacToeController:

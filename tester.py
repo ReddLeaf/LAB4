@@ -1,9 +1,10 @@
 # pyright : strict
 
-from common_types import WinConditionType, TokenPhysicsType, Player
-from model import ConnectTacToeModel
-from classes import NotConnectFour, BasicTicTacToe, make_wincon, make_physics,WinConditions, TokenPhysics
-from player import PlayerData, make_players
+from core.common_types import WinConditionType, TokenPhysicsType, Player
+from game.model import ConnectTacToeModel
+from mechanics.token_physics import make_physics
+from mechanics.win_conditions import make_wincon
+from mechanics.player import PlayerData, make_players
 
 def make(win_condition_type: WinConditionType, token_physics_type: TokenPhysicsType) -> ConnectTacToeModel:
     condition = make_wincon(win_condition_type)

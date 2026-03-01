@@ -1,5 +1,5 @@
 # pyright: strict
-from player import PlayerData
+from mechanics.player import PlayerData
 
 class ConnectTacToeView:
     def display_grid(self, grid: list[str]):

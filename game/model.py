@@ -1,9 +1,10 @@
 # pyright: strict
 
 from collections.abc import Sequence
-from common_types import Player
-from classes import WinConditions, TokenPhysics
-from player import PlayerData
+from core.common_types import Player
+from mechanics.token_physics import TokenPhysics
+from mechanics.win_conditions import WinConditions
+from mechanics.player import PlayerData
 
 class ConnectTacToeModel:
     ROW_SIZE: int = 6

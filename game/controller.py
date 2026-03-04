@@ -1,4 +1,4 @@
-# pyright : strict
+# pyright: strict
 
 from game.model import ConnectTacToeModel
 from game.view import ConnectTacToeView

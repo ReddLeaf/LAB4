@@ -35,9 +35,8 @@ class ConnectTacToeView:
     def show_winner(self, winner: PlayerData | None, grid: list[str]):
         def check_for_unoccupied():
             for i in grid:
-                for j in i:
-                    if j == ".":
-                        return False
+                if "." in i:
+                    return False
             return True
 
         if winner is None and check_for_unoccupied():

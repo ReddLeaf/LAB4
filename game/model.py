@@ -1,6 +1,5 @@
 # pyright: strict
-
-from collections.abc import Sequence
+# from collections.abc import Sequence
 from core.common_types import Player
 from mechanics.token_physics import TokenPhysics
 from mechanics.win_conditions import WinConditions
@@ -11,14 +10,16 @@ class ConnectTacToeModel:
     COL_SIZE: int = 7
 
     def __init__(self, players: list[PlayerData], condition: WinConditions, token_type: TokenPhysics) -> None:
-        self._players = players
-        self.condition = condition
-        self.token_type = token_type
+        self._players: list[PlayerData] = players
+        self.condition: WinConditions = condition
+        self.token_type: TokenPhysics = token_type
 
         self._grid: list[list[str]] = self._gen_map(self.ROW_SIZE, self.COL_SIZE)
         self._turn: int = 0
         self._winner = None
         self._is_game_done = False
+
+        self._symbol_to_player: dict[str, PlayerData] = {p.symbol: p for p in self._players}
 
     def _gen_map(self, row: int, col: int) -> list[list[str]]:
         grid: list[list[str]] = [["." for _ in range(col)] for _ in range(row)]
@@ -67,15 +68,22 @@ class ConnectTacToeModel:
         
         return False
 
-    def advance_turn(self) -> None:
-        self._is_game_done = self.condition.is_game_done(self.grid, self._players[self._turn].symbol)
-        if self._is_game_done:
-            self._winner = self.current_player
-        self._turn = (self._turn + 1) % len(self._players)
-        self._grid = self.token_type.apply_physics(self._grid, self.row_count, self.col_count)
-
     def get_owner(self, row: int, col: int) -> Player | None:
         for p in self._players:
             if (row, col) in p.owned_tokens:
                 return p.player
         return None
+
+    def _evaluate_state(self):
+        result= self.condition.evaluate(self.grid, self.row_count, self.col_count)
+
+        if result is None:
+            return
+
+        self._winner = self._symbol_to_player.get(result, None) if result != "Draw" else None
+        self._is_game_done = True
+
+    def advance_turn(self) -> None:
+        self._grid = self.token_type.apply_physics(self._grid, self.row_count, self.col_count)
+        self._evaluate_state()
+        self._turn = (self._turn + 1) % len(self._players)

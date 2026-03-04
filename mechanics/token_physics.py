@@ -1,3 +1,4 @@
+# pyright: strict
 from typing import Callable
 from abc import ABC, abstractmethod
 from core.common_types import TokenPhysicsType
